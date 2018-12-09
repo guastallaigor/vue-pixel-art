@@ -10,7 +10,8 @@
     "lint": "vue-cli-service lint",
     "test:e2e": "vue-cli-service test:e2e",
     "test:unit": "vue-cli-service test:unit",
-    "e2e": "cypress open"
+    "e2e": "cypress open",
+    "deploy": "npm run build && now && now alias"
   },
   "dependencies": {
     "vue": "^2.5.17"
