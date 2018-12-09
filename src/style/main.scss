@@ -1,0 +1,94 @@
+.layout {
+  display: flex;
+  flex-direction: row;
+  flex: 1 1 auto;
+  min-width: 0;
+}
+
+.flex {
+  flex: 1 1 auto;
+  @media screen and (min-width: 1264px) {
+    flex-basis: 25%;
+    flex-grow: 0;
+    max-width: 25%;
+  }
+  @media screen and (min-width: 960px) {
+    flex-basis: 33.33333333333333%;
+    flex-grow: 0;
+    max-width: 33.33333333333333%;
+  }
+  @media screen and (min-width: 0px) {
+    flex-basis: 100%;
+    max-width: 100%;
+    flex-grow: 0;
+  }
+  @media screen and (min-width: 600px) {
+    flex-basis: 50%;
+    flex-grow: 0;
+    max-width: 50%;
+  }
+}
+
+.column {
+  flex-direction: column;
+}
+
+.wrap-row {
+  flex-flow: row wrap;
+}
+
+.nowrap-row {
+  flex-flow: row nowrap;
+}
+
+.nowrap-column {
+  flex-flow: column nowrap;
+}
+
+.wrap-column {
+  flex-flow: column wrap;
+}
+
+.align-center {
+  align-items: center;
+}
+
+.justify-center {
+  justify-content: center;
+}
+
+.justify-end {
+  justify-content: flex-end;
+}
+
+.text-center {
+  text-align: center !important;
+}
+
+.text-left {
+  text-align: left;
+}
+
+.align-end {
+  align-items: flex-end;
+}
+
+.spacer {
+  flex-grow: 1;
+}
+
+.no-border {
+  border: 0 !important;
+}
+
+.pointer {
+  cursor: pointer;
+}
+
+.space-around {
+  justify-content: space-around;
+}
+
+.align-right {
+  text-align: right !important;
+}

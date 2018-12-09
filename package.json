@@ -1,9 +1,11 @@
 {
   "name": "vue-pixel-art",
+  "description": "Create a pixel art with vuejs",
   "version": "0.1.0",
   "private": true,
   "scripts": {
     "serve": "vue-cli-service serve",
+    "dev": "vue-cli-service serve",
     "build": "vue-cli-service build",
     "lint": "vue-cli-service lint",
     "test:e2e": "vue-cli-service test:e2e",
@@ -27,6 +29,7 @@
     "eslint-plugin-vue": "^5.0.0-0",
     "node-sass": "^4.9.0",
     "sass-loader": "^7.0.1",
+    "typeface-press-start-2p": "0.0.54",
     "vue-template-compiler": "^2.5.17"
   }
 }
