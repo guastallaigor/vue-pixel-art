@@ -15,6 +15,7 @@
 
 [![js-standard-style](https://img.shields.io/badge/code%20style-standard-brightgreen.svg)](http://standardjs.com/)
 [![pattern](https://img.shields.io/badge/pattern-puzzle--pattern-orange.svg)](https://github.com/guastallaigor/puzzle-pattern/)
+[![style](https://img.shields.io/badge/style-NES.css-red.svg)](https://nostalgic-css.github.io/NES.css/)
 [![Cypress.io tests](https://img.shields.io/badge/cypress.io-tests-green.svg)](https://cypress.io)
 
 ## Usage
