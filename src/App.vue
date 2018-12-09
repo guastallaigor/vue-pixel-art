@@ -65,6 +65,20 @@
           <label for="height">Code generated</label>
           <textarea id="code" :rows="getRows" name="code" readonly class="input w100" v-model="code"></textarea>
         </div>
+        <div class="layout nowrap-row relative">
+          <div class="field mt">
+            <button
+              class="btn is-primary"
+              v-clipboard:copy="code"
+              v-clipboard:success="onCopy"
+            >Copy to clipboard</button>
+          </div>
+           <transition name="fade" mode="out-in">
+            <div class="balloon from-left copied transition" v-if="show">
+              Copied!
+            </div>
+          </transition>
+        </div>
       </section>
       <footer class="layout justify-center align-center wrap-column">
         <div>
@@ -99,6 +113,7 @@ export default {
   data: () => ({
     size: 8,
     pixel: 4,
+    show: false,
     sizeError: false,
     color: '#1cb785',
     code: CODE_START,
@@ -108,14 +123,14 @@ export default {
   computed: {
     getRows () {
       if (window.innerWidth > 1439) {
-        return 14
+        return 11
       }
 
       if (window.innerWidth > 720) {
-        return 10
+        return 7
       }
 
-      return 8
+      return 5
     }
   },
   mounted () {
@@ -278,6 +293,12 @@ export default {
       grid
         .style
         .gridTemplateRows = '1fr '.repeat(this.size)
+    },
+    onCopy() {
+      this.show = true
+      setTimeout(() => {
+        this.show = false
+      }, 2000)
     }
   }
 }
@@ -314,6 +335,31 @@ $px: 2px;
     sans-serif;
   height: 100%;
   width: 100%;
+}
+
+.copied {
+  position: absolute !important;
+  border: 0 !important;
+  top: -50px !important;
+  left: 30% !important;
+}
+
+.transition {
+  transition: .3s all linear !important;
+}
+
+.fade-enter-active,
+.fade-leave-active {
+  transition: opacity .8s;
+}
+
+.fade-enter,
+.fade-leave-to {
+  opacity: 0;
+}
+
+.relative {
+  position: relative;
 }
 
 .hide {
