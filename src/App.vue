@@ -6,7 +6,9 @@
     <div class="layout wrap-row mt h100">
       <section class="container with-title w50 h-container">
         <h2 class="title">Draw</h2>
-        <div class="draw" ref="drawGrid"></div>
+        <div class="editor">
+          <div class="draw" ref="drawGrid"></div>
+        </div>
       </section>
       <section class="form container with-title w50 h-container">
         <h2 class="title">Configuration</h2>
@@ -107,7 +109,7 @@ export default {
       this.color = e.target.value
     },
     removeChild (el) {
-      el.removeEventListener('click', this.draw.bind(this, el))
+      el.removeEventListener('click', this.paint.bind(this, el))
       el.parentElement.removeChild(el)
     },
     removeChilds () {
@@ -130,7 +132,7 @@ export default {
       el.style.backgroundColor = this.color || 'transparent'
       this.output()
     },
-    output() {
+    output () {
       const grid = this.$refs.drawGrid
       const allDivs = grid.querySelectorAll('div')
       const boxShadows = Array.from(allDivs)
@@ -160,7 +162,6 @@ export default {
     changeSize (size) {
       this.size = size || 8
       const grid = this.$refs.drawGrid
-      const allDivs = grid.querySelectorAll('div')
       const length = parseInt(this.size ** 2, 10)
       const qtdDivs = Array(length).fill(0)
 
@@ -175,7 +176,7 @@ export default {
 
       grid.style.gridTemplateColumns = grid.style.gridTemplateRows = '1fr '.repeat(
         this.size
-      );
+      )
     }
   },
   watch: {
@@ -200,6 +201,10 @@ html, body {
 $px: 2px;
 
 #app {
+  grid-template:
+    "editor settings"
+    "editor output"
+    / auto 400px;
   font-family: 'Press Start 2P', -apple-system, BlinkMacSystemFont, Segoe UI,
     Roboto, Oxygen, Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue,
     sans-serif;
@@ -271,24 +276,28 @@ footer .mb {
   height: calc(100% - 10em);
 }
 
-.draw {
-  display: grid;
-  margin: auto;
-  width: 600px;
-  height: 600px;
-  border: 3px solid #333333;
-  background-color: #fdfdfd;
-  grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
-  grid-template-rows: 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
-  background-image: linear-gradient(45deg, #e2e2e2 25%, transparent 25%, transparent 75%, #e2e2e2 75%, #e2e2e2),
-    linear-gradient( 45deg, #e2e2e2 25%, transparent 25%, transparent 75%, #e2e2e2 75%, #e2e2e2);
-  background-size: 30px 30px;
-  background-position: 0 0, 15px 15px;
-}
+.editor {
+  grid-area: editor;
 
-.draw div {
-  border: 1px solid #b6b6b6;
-  background-color: transparent;
+  .draw {
+    display: grid;
+    margin: auto;
+    width: 600px;
+    height: 600px;
+    border: 3px solid #333333;
+    background-color: #fdfdfd;
+    grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
+    grid-template-rows: 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
+    background-image: linear-gradient(45deg, #e2e2e2 25%, transparent 25%, transparent 75%, #e2e2e2 75%, #e2e2e2),
+      linear-gradient( 45deg, #e2e2e2 25%, transparent 25%, transparent 75%, #e2e2e2 75%, #e2e2e2);
+    background-size: 30px 30px;
+    background-position: 0 0, 15px 15px;
+
+    div {
+      border: 1px solid #b6b6b6;
+      background-color: transparent;
+    }
+  }
 }
 
 pre {
