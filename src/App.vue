@@ -5,7 +5,7 @@
     </section>
     <div class="layout wrap-row mt h100">
       <section class="container with-title w50 h-container">
-        <h2 class="title">Draw</h2>
+        <h2 class="title">Paint</h2>
         <div class="editor">
           <div class="draw" ref="drawGrid"></div>
         </div>
@@ -14,7 +14,7 @@
         <h2 class="title">Configuration</h2>
         <div class="layout wrap-row align-end">
           <div class="field mr-field">
-            <button class="btn is-error" @click="changeSize">Clear</button>
+            <button class="btn is-error" @click="changeSize">Clear paint</button>
           </div>
           <div class="field w33 pr-field">
             <label for="size">Size</label>
