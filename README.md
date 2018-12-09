@@ -37,7 +37,7 @@ npm install
 npm run serve
 ```
 
-The default port is `localhost:8080`.
+The default port is **8080**.
 
 ## TODO
 
