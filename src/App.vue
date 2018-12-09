@@ -16,28 +16,29 @@
           <div class="field mr-field">
             <button class="btn is-error" @click="changeSize">Clear paint</button>
           </div>
-          <div class="field w33 pr-field">
+          <div class="field pr-field">
             <label for="size">Size</label>
             <div class="layout nowrap-row align-end">
               <input
                 type="number"
                 id="size"
                 name="size"
-                class="input"
+                class="input w100px"
+                :class="{'is-error': sizeError}"
                 v-model="size"
                 @input="changeSize(parseInt($event.target.value, 10))"
               />
               <span class="pl">px</span>
             </div>
           </div>
-          <div class="field w33 pr-field">
+          <div class="field pr-field">
             <label for="height">Pixels</label>
             <div class="layout nowrap-row align-end">
               <input
                 type="number"
                 id="pixel"
                 name="pixel"
-                class="input"
+                class="input w100px"
                 v-model="pixel"
               />
               <span class="pl">px</span>
@@ -98,6 +99,7 @@ export default {
   data: () => ({
     size: 8,
     pixel: 4,
+    sizeError: false,
     color: '#1cb785',
     code: CODE_START,
     end: `}
@@ -209,6 +211,13 @@ export default {
       </style>`
     },
     changeSize () {
+      if (this.size > 100) {
+        this.sizeError = true
+        return
+      }
+
+      this.sizeError = false
+
       const refs = this.$refs
       const grid = refs.drawGrid
       const length = parseInt(this.size ** 2, 10)
@@ -241,6 +250,10 @@ html, body {
   width: 100%;
 }
 
+a {
+  text-decoration: none;
+}
+
 .draw div {
   border: 1px solid #b6b6b6;
   background-color: transparent;
@@ -248,7 +261,7 @@ html, body {
 </style>
 
 <style scoped lang="scss">
-@import './style/main.scss';
+@import './style/flex.scss';
 
 $px: 2px;
 
@@ -269,7 +282,7 @@ $px: 2px;
 }
 
 .pr-field {
-  padding-right: 10px;
+  padding-right: 20px;
 }
 
 .mr-field {
@@ -298,6 +311,10 @@ footer .mb {
 
 .pr {
   padding-right: $px * 5;
+}
+
+.w100px {
+  width: 100px;
 }
 
 .w30 {
