@@ -12,18 +12,34 @@
       </section>
       <section class="form container with-title w50 h-container">
         <h2 class="title">Configuration</h2>
-        <div class="layout wrap-row">
+        <div class="layout wrap-row align-end">
+          <div class="field mr-field">
+            <button class="btn is-error" @click="changeSize">Clear</button>
+          </div>
           <div class="field w33 pr-field">
             <label for="size">Size</label>
             <div class="layout nowrap-row align-end">
-              <input type="number" id="size" name="size" class="input" v-model="size">
+              <input
+                type="number"
+                id="size"
+                name="size"
+                class="input"
+                v-model="size"
+                @input="changeSize(parseInt($event.target.value, 10))"
+              />
               <span class="pl">px</span>
             </div>
           </div>
           <div class="field w33 pr-field">
             <label for="height">Pixels</label>
             <div class="layout nowrap-row align-end">
-              <input type="number" id="pixel" name="pixel" class="input" v-model="pixel">
+              <input
+                type="number"
+                id="pixel"
+                name="pixel"
+                class="input"
+                v-model="pixel"
+              />
               <span class="pl">px</span>
             </div>
           </div>
@@ -73,6 +89,8 @@
 <script>
 import GithubCorner from '@/components/GithubCorner.vue'
 
+const CODE_START = '<div class="vue-pixel-art"></div>'
+
 export default {
   components: {
     GithubCorner
@@ -81,7 +99,7 @@ export default {
     size: 8,
     pixel: 4,
     color: '#1cb785',
-    code: '<div class="vue-pixel-art"></div>',
+    code: CODE_START,
     end: `}
           </style>`
   }),
@@ -99,21 +117,27 @@ export default {
     }
   },
   mounted () {
-    this.changeSize(8)
+    this.changeSize()
   },
   beforeDestroy () {
     this.removeChilds()
   },
   methods: {
     updateColor (e) {
-      this.color = e.target.value
+      const value = e.target.value
+      this.color = value
     },
     removeChild (el) {
-      el.removeEventListener('click', this.paint.bind(this, el))
-      el.parentElement.removeChild(el)
+      el.removeEventListener('click', this
+        .paint
+        .bind(this, el))
+      el
+        .parentElement
+        .removeChild(el)
     },
     removeChilds () {
-      const grid = this.$refs.drawGrid
+      const refs = this.$refs
+      const grid = refs.drawGrid
       const allDivs = grid.querySelectorAll('div')
 
       Array.from(allDivs).forEach(el => {
@@ -121,28 +145,55 @@ export default {
       })
     },
     resetEventListner () {
-      const grid = this.$refs.drawGrid
+      const refs = this.$refs
+      const grid = refs.drawGrid
       const allDivs = grid.querySelectorAll('div')
 
       Array.from(allDivs).forEach(el => {
         el.addEventListener('click', this.paint.bind(this, el))
       })
     },
+    hexToRgb(hex) {
+      const shorthandRegex = /^#?([a-f\d])([a-f\d])([a-f\d])$/i
+      hex = hex.replace(shorthandRegex, function(m, r, g, b) {
+          return r + r + g + g + b + b
+      })
+
+      const result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex)
+      return result
+        ? `rgb(${parseInt(result[1], 16)}, ${parseInt(result[2], 16)}, ${parseInt(result[3], 16)})`
+        : null
+    },
     paint (el) {
-      el.style.backgroundColor = this.color || 'transparent'
+      const style = el.style
+      console.log(style.backgroundColor, ':1')
+      console.log(this.hexToRgb(this.color), ':2')
+      const setBackgroundColor = style.backgroundColor === this.hexToRgb(this.color)
+        ? ''
+        : this.color
+
+      el
+        .style
+        .backgroundColor = setBackgroundColor
+
       this.output()
     },
     output () {
-      const grid = this.$refs.drawGrid
+      const refs = this.$refs
+      const grid = refs.drawGrid
       const allDivs = grid.querySelectorAll('div')
       const boxShadows = Array.from(allDivs)
-        .filter(el => el.style.backgroundColor)
+        .filter(el => el
+          .style
+          .backgroundColor)
         .map((el, i) => {
           return [
             `${this.pixel * (i % this.size) + this.pixel}px`, // col
             `${this.pixel * Math.ceil((i + 1) / this.size)}px`, // row
             0,
-            el.style.backgroundColor
+            el
+              .style
+              .backgroundColor
           ].join(' ')
         })
       this.code = `<div class="vue-pixel-art"></div>
@@ -159,12 +210,13 @@ export default {
       }
       </style>`
     },
-    changeSize (size) {
-      this.size = size || 8
-      const grid = this.$refs.drawGrid
+    changeSize () {
+      const refs = this.$refs
+      const grid = refs.drawGrid
       const length = parseInt(this.size ** 2, 10)
       const qtdDivs = Array(length).fill(0)
 
+      this.code = CODE_START
       this.removeChilds()
 
       qtdDivs.forEach(i => {
@@ -174,15 +226,12 @@ export default {
 
       this.resetEventListner()
 
-      grid.style.gridTemplateColumns = grid.style.gridTemplateRows = '1fr '.repeat(
-        this.size
-      )
-    }
-  },
-  watch: {
-    size (value) {
-      const intval = parseInt(value, 10)
-      this.changeSize(intval)
+      grid
+        .style
+        .gridTemplateColumns = '1fr '.repeat(this.size)
+      grid
+        .style
+        .gridTemplateRows = '1fr '.repeat(this.size)
     }
   }
 }
@@ -192,6 +241,11 @@ export default {
 html, body {
   height: calc(100% - 4em);
   width: 100%;
+}
+
+.draw div {
+  border: 1px solid #b6b6b6;
+  background-color: transparent;
 }
 </style>
 
@@ -218,6 +272,10 @@ $px: 2px;
 
 .pr-field {
   padding-right: 10px;
+}
+
+.mr-field {
+  padding-right: 20px;
 }
 
 .mt {
@@ -292,11 +350,6 @@ footer .mb {
       linear-gradient( 45deg, #e2e2e2 25%, transparent 25%, transparent 75%, #e2e2e2 75%, #e2e2e2);
     background-size: 30px 30px;
     background-position: 0 0, 15px 15px;
-
-    div {
-      border: 1px solid #b6b6b6;
-      background-color: transparent;
-    }
   }
 }
 
