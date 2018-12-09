@@ -4,8 +4,10 @@
       <h1 class="text-center">Vue Pixel Art</h1>
     </section>
     <div class="layout wrap-row mt h100">
-      <section class="draw container with-title w50 h-container">
+      <section class="container with-title w50 h-container">
         <h2 class="title">Draw</h2>
+        <div class="draw">
+        </div>
       </section>
       <section class="form container with-title w50 h-container">
         <h2 class="title">Configuration</h2>
@@ -25,7 +27,7 @@
             </div>
           </div>
           <div class="field w33 pr-field">
-            <label for="height">Pixel</label>
+            <label for="height">Pixels</label>
             <div class="layout nowrap-row align-end">
               <input type="number" id="pixel" name="pixel" class="input" v-model="pixel">
               <span class="pl">px</span>
@@ -50,7 +52,7 @@
         </div>
         <div class="field mt">
           <label for="height">Code generated</label>
-          <textarea id="code" :rows="getRows" name="code" class="input w100" v-model="code"></textarea>
+          <textarea id="code" :rows="getRows" name="code" readonly class="input w100" v-model="code"></textarea>
         </div>
       </section>
     </div>
@@ -68,6 +70,7 @@ export default {
   data: () => ({
     width: null,
     height: null,
+    pixel: null,
     color: '#1cb785',
     code: '<div class="vue-pixel-art"></div>',
     end: `}
@@ -130,8 +133,24 @@ $px: 2px;
   padding-left: $px * 5;
 }
 
+.w30 {
+  width: 30%;
+}
+
+.w40 {
+  width: 40%;
+}
+
 .w50 {
   width: 50%;
+}
+
+.w60 {
+  width: 60%;
+}
+
+.w70 {
+  width: 70%;
 }
 
 .h100 {
@@ -144,6 +163,19 @@ $px: 2px;
 
 .h-container {
   height: calc(100% - 9em);
+}
+
+.draw {
+  display: grid;
+  margin: auto;
+  width: 600px;
+  height: 600px;
+  border: 3px solid #333333;
+  background-color: #fdfdfd;
+  background-image: linear-gradient(45deg, #e2e2e2 25%, transparent 25%, transparent 75%, #e2e2e2 75%, #e2e2e2),
+    linear-gradient( 45deg, #e2e2e2 25%, transparent 25%, transparent 75%, #e2e2e2 75%, #e2e2e2);
+  background-size: 30px 30px;
+  background-position: 0 0, 15px 15px;
 }
 
 pre {
