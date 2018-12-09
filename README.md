@@ -45,7 +45,7 @@ The default port is **8080**.
 * [ ] Add Unit tests with Jest.
 * [ ] Add Redo/Undo.
 * [X] Add mouse drag and paint.
-* [ ] Add Vuejs pixel logo on README and favicon.ico.
+* [X] Add Vuejs pixel logo on README and favicon.ico.
 * [X] Deploy.
 
 ## License
