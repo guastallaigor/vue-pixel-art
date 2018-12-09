@@ -20,7 +20,7 @@
 
 ## Usage
 
-Go to https://vue-pixel-art-sugfampkgg.now.sh and have fun!
+Go to https://vue-pixel-art-plrcirbvfk.now.sh and have fun!
 
 ## Development
 
