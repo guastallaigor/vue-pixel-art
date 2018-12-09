@@ -203,7 +203,7 @@ export default {
     paint (el) {
       const style = el.style
       const setBackgroundColor = style.backgroundColor === this.hexToRgb(this.color)
-        ? ''
+        ? 'transparent'
         : this.color
 
       this.setBgColor(el, setBackgroundColor)
@@ -220,9 +220,6 @@ export default {
       const grid = refs.drawGrid
       const allDivs = grid.querySelectorAll('div')
       const boxShadows = Array.from(allDivs)
-        .filter(el => el
-          .style
-          .backgroundColor)
         .map((el, i) => {
           return [
             `${this.pixel * (i % this.size) + this.pixel}px`, // col
@@ -230,9 +227,12 @@ export default {
             0,
             el
               .style
-              .backgroundColor
+              .backgroundColor || 'transparent'
           ].join(' ')
         })
+
+      const spliced = boxShadows.filter((it, i) => !/(\s0 transparent$)/.test(it))
+      const boxShadowProperty = spliced.join(', \n')
       this.code = `<div class="vue-pixel-art"></div>
 <style>
 .vue-pixel-art::before {
@@ -243,7 +243,7 @@ export default {
   width: ${this.pixel}px;
   height: ${this.pixel}px;
   background: transparent;
-  box-shadow: ${boxShadows.join(', \n')};
+  box-shadow: ${boxShadowProperty};
 }
 </style>`
     },
@@ -288,7 +288,7 @@ html, body {
 }
 
 a, a:hover {
-  text-decoration: none;
+  text-decoration: none !important;
 }
 
 .draw div {
