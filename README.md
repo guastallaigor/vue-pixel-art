@@ -46,7 +46,7 @@ The default port is `localhost:8080`.
 * [ ] Add Redo/Undo.
 * [X] Add mouse drag and paint.
 * [ ] Add Vuejs pixel logo on README and favicon.ico.
-* [ ] Deploy.
+* [X] Deploy.
 
 ## License
 
