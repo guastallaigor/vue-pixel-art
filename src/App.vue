@@ -135,16 +135,14 @@ export default {
       const allDivs = grid.querySelectorAll('div')
       const boxShadows = Array.from(allDivs)
         .filter(el => el.style.backgroundColor)
-        .map(
-        (el, i) => {
+        .map((el, i) => {
           return [
             `${this.pixel * (i % this.size) + this.pixel}px`, // col
             `${this.pixel * Math.ceil((i + 1) / this.size)}px`, // row
             0,
             el.style.backgroundColor
-          ].join(' ');
-        }
-      );
+          ].join(' ')
+        })
       this.code = `<div class="vue-pixel-art"></div>
       <style>
       .vue-pixel-art::before {
