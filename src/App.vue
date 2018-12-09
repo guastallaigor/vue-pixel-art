@@ -133,6 +133,15 @@ export default {
       el.removeEventListener('click', this
         .paint
         .bind(this, el))
+      el.removeEventListener('mousedown', this
+        .mousedown
+        .bind(this, el))
+      el.removeEventListener('mouseup', this
+        .mouseup
+        .bind(this, el))
+      el.removeEventListener('mousemove', this
+        .mousemove
+        .bind(this, el))
       el
         .parentElement
         .removeChild(el)
@@ -152,7 +161,18 @@ export default {
       const allDivs = grid.querySelectorAll('div')
 
       Array.from(allDivs).forEach(el => {
-        el.addEventListener('click', this.paint.bind(this, el))
+        el.addEventListener('mousedown', this
+          .mousedown
+          .bind(this, el))
+        el.addEventListener('mouseup', this
+          .mouseup
+          .bind(this, el))
+        el.addEventListener('mousemove', this
+          .mousemove
+          .bind(this, el))
+        el.addEventListener('click', this
+          .paint
+          .bind(this, el))
       })
     },
     hexToRgb(hex) {
@@ -166,15 +186,32 @@ export default {
         ? `rgb(${parseInt(result[1], 16)}, ${parseInt(result[2], 16)}, ${parseInt(result[3], 16)})`
         : null
     },
+    mousemove (el) {
+      if (this.isMouseDown) {
+        this.mustPaint(el)
+      }
+    },
+    mousedown (el) {
+      this.isMouseDown = true
+    },
+    mouseup (el) {
+      this.isMouseDown = false
+    },
+    mustPaint (el) {
+      this.setBgColor(el, this.color)
+    },
     paint (el) {
       const style = el.style
       const setBackgroundColor = style.backgroundColor === this.hexToRgb(this.color)
         ? ''
         : this.color
 
+      this.setBgColor(el, setBackgroundColor)
+    },
+    setBgColor (el, color) {
       el
         .style
-        .backgroundColor = setBackgroundColor
+        .backgroundColor = color
 
       this.output()
     },
@@ -250,7 +287,7 @@ html, body {
   width: 100%;
 }
 
-a {
+a, a:hover {
   text-decoration: none;
 }
 
