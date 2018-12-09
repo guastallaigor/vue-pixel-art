@@ -112,14 +112,13 @@ export default {
     },
     paint (el) {
       el.style.backgroundColor = this.color || 'transparent'
+      this.output()
     },
     output() {
       const grid = this.$refs.drawGrid
       const allDivs = grid.querySelectorAll('div')
-      const boxShadows = Array.from(grid.querySelectorAll(allDivs))
-        .filter(el => {
-          el.style.backgroundColor && el.style.backgroundColor != 'transparent'
-        })
+      const boxShadows = Array.from(allDivs)
+        .filter(el => el.style.backgroundColor)
         .map(
         (el, i) => {
           return [
