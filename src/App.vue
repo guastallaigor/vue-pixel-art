@@ -47,6 +47,22 @@
           <textarea id="code" :rows="getRows" name="code" readonly class="input w100" v-model="code"></textarea>
         </div>
       </section>
+      <footer class="layout justify-center align-center wrap-column">
+        <div>
+          <span class="pr">Made with</span>
+          <i class="icon heart"></i>
+          <span class="pl">by</span>
+          <a class="pl" href="https://github.com/guastallaigor" target="_blank">@guastallaigor</a>
+        </div>
+        <div class="mt mb">
+          <span class="pr">Project refactored from</span>
+          <a href="https://github.com/BcRikko/css-collection/" target="_blank">CSS Collection / DotGen</a>
+        </div>
+        <div>
+          <span class="pr">Credits:</span>
+          <a class="pl" href="https://github.com/BcRikko" target="_blank">@bc_rikko</a>
+        </div>
+      </footer>
     </div>
     <github-corner/>
   </main>
@@ -205,8 +221,24 @@ $px: 2px;
   margin-top: $px * 16;
 }
 
+.mb {
+  margin-bottom: $px * 16;
+}
+
+footer .mt {
+  margin-top: $px * 11;
+}
+
+footer .mb {
+  margin-bottom: $px * 11;
+}
+
 .pl {
   padding-left: $px * 5;
+}
+
+.pr {
+  padding-right: $px * 5;
 }
 
 .w30 {

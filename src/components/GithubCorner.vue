@@ -3,6 +3,7 @@
     <a
       href="https://github.com/guastallaigor/vue-pixel-art"
       class="github-corner"
+      target="_blank"
       aria-label="View source on GitHub"
     >
       <svg
