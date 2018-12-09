@@ -11,7 +11,7 @@
     "test:e2e": "vue-cli-service test:e2e",
     "test:unit": "vue-cli-service test:unit",
     "e2e": "cypress open",
-    "deploy": "npm run build && now && now alias"
+    "deploy": "npm run build && now --public && now alias && now rm vue-pixel-art --safe --yes"
   },
   "dependencies": {
     "vue": "^2.5.17"
