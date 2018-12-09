@@ -22,6 +22,7 @@
 
 * Click on a square to paint. If it is already painted, that square will be transparent again.
 * Hold mouse down and drag your mouse everywhere in the grid to paint. This will not erase any square, just paint.
+* Size can't be greater than 100.
 
 ## Usage
 
