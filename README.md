@@ -18,6 +18,11 @@
 [![style](https://img.shields.io/badge/style-NES.css-red.svg)](https://nostalgic-css.github.io/NES.css/)
 [![Cypress.io tests](https://img.shields.io/badge/cypress.io-tests-green.svg)](https://cypress.io)
 
+## Instructions
+
+* Click on a square to paint. If it is already painted, that square will be transparent again.
+* Hold mouse down and drag your mouse everywhere in the grid to paint. This will not erase any square, just paint.
+
 ## Usage
 
 Go to https://vue-pixel-art-dmqkvcflzi.now.sh and have fun!
