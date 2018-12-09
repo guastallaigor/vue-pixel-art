@@ -1,28 +1,20 @@
 <template>
-  <div id="app">
+  <main id="app">
     <section class="container is-dark">
       <h1 class="text-center">Vue Pixel Art</h1>
     </section>
     <div class="layout wrap-row mt h100">
       <section class="container with-title w50 h-container">
         <h2 class="title">Draw</h2>
-        <div class="draw">
-        </div>
+        <div class="draw" ref="drawGrid"></div>
       </section>
       <section class="form container with-title w50 h-container">
         <h2 class="title">Configuration</h2>
         <div class="layout wrap-row">
           <div class="field w33 pr-field">
-            <label for="width">Width</label>
+            <label for="size">Size</label>
             <div class="layout nowrap-row align-end">
-              <input type="number" id="width" name="width" class="input" v-model="width">
-              <span class="pl">px</span>
-            </div>
-          </div>
-          <div class="field w33 pr-field">
-            <label for="height">Height</label>
-            <div class="layout nowrap-row align-end">
-              <input type="number" id="height" name="height" class="input" v-model="height">
+              <input type="number" id="size" name="size" class="input" v-model="size">
               <span class="pl">px</span>
             </div>
           </div>
@@ -57,7 +49,7 @@
       </section>
     </div>
     <github-corner/>
-  </div>
+  </main>
 </template>
 
 <script>
@@ -68,9 +60,8 @@ export default {
     GithubCorner
   },
   data: () => ({
-    width: null,
-    height: null,
-    pixel: null,
+    size: 8,
+    pixel: 4,
     color: '#1cb785',
     code: '<div class="vue-pixel-art"></div>',
     end: `}
@@ -79,7 +70,7 @@ export default {
   computed: {
     getRows () {
       if (window.innerWidth > 1439) {
-        return 15
+        return 14
       }
 
       if (window.innerWidth > 720) {
@@ -89,9 +80,95 @@ export default {
       return 8
     }
   },
+  mounted () {
+    this.changeSize(8)
+  },
+  beforeDestroy () {
+    this.removeChilds()
+  },
   methods: {
-    updateColor(e) {
+    updateColor (e) {
       this.color = e.target.value
+    },
+    removeChild (el) {
+      el.removeEventListener('click', this.draw.bind(this, el))
+      el.parentElement.removeChild(el)
+    },
+    removeChilds () {
+      const grid = this.$refs.drawGrid
+      const allDivs = grid.querySelectorAll('div')
+
+      Array.from(allDivs).forEach(el => {
+        this.removeChild(el)
+      })
+    },
+    resetEventListner () {
+      const grid = this.$refs.drawGrid
+      const allDivs = grid.querySelectorAll('div')
+
+      Array.from(allDivs).forEach(el => {
+        el.addEventListener('click', this.paint.bind(this, el))
+      })
+    },
+    paint (el) {
+      el.style.backgroundColor = this.color || 'transparent'
+    },
+    output() {
+      const grid = this.$refs.drawGrid
+      const allDivs = grid.querySelectorAll('div')
+      const boxShadows = Array.from(grid.querySelectorAll(allDivs))
+        .filter(el => {
+          el.style.backgroundColor && el.style.backgroundColor != 'transparent'
+        })
+        .map(
+        (el, i) => {
+          return [
+            `${this.pixel * (i % this.size) + this.pixel}px`, // col
+            `${this.pixel * Math.ceil((i + 1) / this.size)}px`, // row
+            0,
+            el.style.backgroundColor
+          ].join(' ');
+        }
+      );
+      this.code = `<div class="vue-pixel-art"></div>
+      <style>
+      .vue-pixel-art::before {
+        content: "";
+        position: absolute;
+        top: ${this.pixel * -1}px;
+        left: ${this.pixel * -1}px;
+        width: ${this.pixel}px;
+        height: ${this.pixel}px;
+        background: transparent;
+        box-shadow: ${boxShadows.join(', \n')};
+      }
+      </style>`
+    },
+    changeSize (size) {
+      this.size = size || 8
+      const grid = this.$refs.drawGrid
+      const allDivs = grid.querySelectorAll('div')
+      const length = parseInt(this.size ** 2, 10)
+      const qtdDivs = Array(length).fill(0)
+
+      this.removeChilds()
+
+      qtdDivs.forEach(i => {
+        const div = document.createElement('div')
+        grid.appendChild(div)
+      })
+
+      this.resetEventListner()
+
+      grid.style.gridTemplateColumns = grid.style.gridTemplateRows = '1fr '.repeat(
+        this.size
+      );
+    }
+  },
+  watch: {
+    size (value) {
+      const intval = parseInt(value, 10)
+      this.changeSize(intval)
     }
   }
 }
@@ -162,7 +239,7 @@ $px: 2px;
 }
 
 .h-container {
-  height: calc(100% - 9em);
+  height: calc(100% - 10em);
 }
 
 .draw {
@@ -172,10 +249,17 @@ $px: 2px;
   height: 600px;
   border: 3px solid #333333;
   background-color: #fdfdfd;
+  grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
+  grid-template-rows: 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
   background-image: linear-gradient(45deg, #e2e2e2 25%, transparent 25%, transparent 75%, #e2e2e2 75%, #e2e2e2),
     linear-gradient( 45deg, #e2e2e2 25%, transparent 25%, transparent 75%, #e2e2e2 75%, #e2e2e2);
   background-size: 30px 30px;
   background-position: 0 0, 15px 15px;
+}
+
+.draw div {
+  border: 1px solid #b6b6b6;
+  background-color: transparent;
 }
 
 pre {
