@@ -219,11 +219,13 @@ export default {
       const refs = this.$refs
       const grid = refs.drawGrid
       const allDivs = grid.querySelectorAll('div')
+      const pixel = parseInt(this.pixel, 10)
+      const size = parseInt(this.size, 10)
       const boxShadows = Array.from(allDivs)
         .map((el, i) => {
           return [
-            `${this.pixel * (i % this.size) + this.pixel}px`, // col
-            `${this.pixel * Math.ceil((i + 1) / this.size)}px`, // row
+            `${pixel * (i % size) + pixel}px`, // col
+            `${pixel * Math.ceil((i + 1) / size)}px`, // row
             0,
             el
               .style
@@ -231,17 +233,17 @@ export default {
           ].join(' ')
         })
 
-      const spliced = boxShadows.filter((it, i) => !/(\s0 transparent$)/.test(it))
+      const spliced = boxShadows.filter(it => !/(\s0 transparent$)/.test(it))
       const boxShadowProperty = spliced.join(', \n')
       this.code = `<div class="vue-pixel-art"></div>
 <style>
 .vue-pixel-art::before {
   content: "";
   position: absolute;
-  top: ${this.pixel * -1}px;
-  left: ${this.pixel * -1}px;
-  width: ${this.pixel}px;
-  height: ${this.pixel}px;
+  top: ${pixel * -1}px;
+  left: ${pixel * -1}px;
+  width: ${pixel}px;
+  height: ${pixel}px;
   background: transparent;
   box-shadow: ${boxShadowProperty};
 }
