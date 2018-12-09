@@ -166,8 +166,6 @@ export default {
     },
     paint (el) {
       const style = el.style
-      console.log(style.backgroundColor, ':1')
-      console.log(this.hexToRgb(this.color), ':2')
       const setBackgroundColor = style.backgroundColor === this.hexToRgb(this.color)
         ? ''
         : this.color
