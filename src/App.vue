@@ -175,10 +175,10 @@ export default {
           .bind(this, el))
       })
     },
-    hexToRgb(hex) {
+    hexToRgb (hex) {
       const shorthandRegex = /^#?([a-f\d])([a-f\d])([a-f\d])$/i
-      hex = hex.replace(shorthandRegex, function(m, r, g, b) {
-          return r + r + g + g + b + b
+      hex = hex.replace(shorthandRegex, function (m, r, g, b) {
+        return r + r + g + g + b + b
       })
 
       const result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex)
@@ -234,18 +234,18 @@ export default {
           ].join(' ')
         })
       this.code = `<div class="vue-pixel-art"></div>
-      <style>
-      .vue-pixel-art::before {
-        content: "";
-        position: absolute;
-        top: ${this.pixel * -1}px;
-        left: ${this.pixel * -1}px;
-        width: ${this.pixel}px;
-        height: ${this.pixel}px;
-        background: transparent;
-        box-shadow: ${boxShadows.join(', \n')};
-      }
-      </style>`
+<style>
+.vue-pixel-art::before {
+  content: "";
+  position: absolute;
+  top: ${this.pixel * -1}px;
+  left: ${this.pixel * -1}px;
+  width: ${this.pixel}px;
+  height: ${this.pixel}px;
+  background: transparent;
+  box-shadow: ${boxShadows.join(', \n')};
+}
+</style>`
     },
     changeSize () {
       if (this.size > 100) {

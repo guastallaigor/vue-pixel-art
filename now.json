@@ -11,7 +11,7 @@
       }
     ]
   },
-  "alias": "guastallaigor.site",
+  "alias": "vue-example",
   "files": [
     "dist"
   ]
