@@ -6,8 +6,16 @@
     <div class="layout wrap-row mt h100">
       <section class="container with-title w50 h-container">
         <h2 class="title">Paint</h2>
-        <div class="editor">
-          <div class="draw" ref="drawGrid"></div>
+        <div class="layout align-start">
+          <div class="field mr-field">
+            <button class="btn is-warning" @click="undo">Undo</button>
+          </div>
+          <div class="editor">
+            <div class="draw" ref="drawGrid"></div>
+          </div>
+          <div class="field ml-field">
+            <button class="btn is-success">Redo</button>
+          </div>
         </div>
       </section>
       <section class="form container with-title w50 h-container">
@@ -117,8 +125,7 @@ export default {
     sizeError: false,
     color: '#1cb785',
     code: CODE_START,
-    end: `}
-          </style>`
+    undoStack: []
   }),
   computed: {
     getRows () {
@@ -227,8 +234,38 @@ export default {
       el
         .style
         .backgroundColor = color
-
+      this.setUndoStack()
       this.output()
+    },
+    setUndoStack () {
+      const refs = this.$refs
+      const grid = refs.drawGrid
+      const divs = [...grid.querySelectorAll('div')]
+      const { code } = this
+
+      this.undoStack.push({code, divs})
+    },
+    undo () {
+      const { length } = this.undoStack
+      if (!this.undoStack || !this.undoStack.length) return
+
+      if (!this.undoStack[length - 2]) {
+        this.changeSize()
+      }
+      const { code, divs } = this.undoStack[length - 2]
+      this.code = code
+
+      this.removeChilds()
+      const refs = this.$refs
+      const grid = refs.drawGrid
+
+      divs.forEach(div => {
+        grid.appendChild(div)
+      })
+
+      this.resetEventListner()
+      this.$forceUpdate()
+      this.undoStack.slice(length - 2, 1)
     },
     output () {
       const refs = this.$refs
@@ -294,7 +331,7 @@ export default {
         .style
         .gridTemplateRows = '1fr '.repeat(this.size)
     },
-    onCopy() {
+    onCopy () {
       this.show = true
       setTimeout(() => {
         this.show = false
@@ -371,7 +408,11 @@ $px: 2px;
 }
 
 .mr-field {
-  padding-right: 20px;
+  margin-right: 20px;
+}
+
+.ml-field {
+  margin-left: 20px;
 }
 
 .mt {
