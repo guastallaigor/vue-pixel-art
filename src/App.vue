@@ -7,8 +7,11 @@
       <section class="container with-title w50 h-container">
         <h2 class="title">Paint</h2>
         <div class="layout align-end">
-          <div class="preview">
-            <div class="before" ref="previewBefore"></div>
+          <div class="layout nowrap-column">
+            <label>Preview</label>
+            <div class="preview">
+              <div class="before" ref="previewBefore"></div>
+            </div>
           </div>
           <div class="editor">
             <div class="draw" ref="drawGrid"></div>
@@ -121,6 +124,7 @@ export default {
     pixel: 4,
     show: false,
     sizeError: false,
+    isMouseDown: false,
     color: '#1cb785',
     code: CODE_START,
     end: `}
@@ -141,9 +145,23 @@ export default {
   },
   mounted () {
     this.changeSize()
+
+    document.addEventListener('mouseup', (el) => {
+      if (el &&
+        el.target &&
+        el
+          .target
+          .parentNode &&
+        el
+          .target
+          .parentNode.className !== 'draw') {
+        this.isMouseDown = false
+      }
+    })
   },
   beforeDestroy () {
     this.removeChilds()
+    document.removeEventListener('mouseup')
   },
   methods: {
     updateColor (e) {
@@ -203,6 +221,7 @@ export default {
       })
 
       const result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex)
+
       return result
         ? `rgb(${parseInt(result[1], 16)}, ${parseInt(result[2], 16)}, ${parseInt(result[3], 16)})`
         : null
@@ -238,36 +257,21 @@ export default {
     },
     setPreview () {
       const size = parseInt(this.size, 10)
-      const pixel = (577 / size) / 2.4
+      const pixel = (577 / size) / 3
+      const boxShadows = this.getBoxShadows(pixel)
       const refs = this.$refs
-      const grid = refs.drawGrid
-      const allDivs = grid.querySelectorAll('div')
-      const boxShadows = Array.from(allDivs)
-        .map((el, i) => {
-          return [
-            `${pixel * (i % size) + pixel}px`, // col
-            `${pixel * Math.ceil((i + 1) / size)}px`, // row
-            0,
-            el
-              .style
-              .backgroundColor || 'transparent'
-          ].join(' ')
-        })
       const before = refs.previewBefore
       before.style.top = `${pixel * -1}px`
       before.style.left = `${pixel * -1}px`
       before.style.width = `${pixel}px`
       before.style.height = `${pixel}px`
-      const spliced = boxShadows.filter(it => !/(\s0 transparent$)/.test(it))
-      const boxShadowProperty = spliced.join(', \n')
-      before.style.boxShadow = boxShadowProperty
+      before.style.boxShadow = boxShadows
       before.style.background = 'transparent'
     },
-    output () {
+    getBoxShadows (pixel) {
       const refs = this.$refs
       const grid = refs.drawGrid
       const allDivs = grid.querySelectorAll('div')
-      const pixel = parseInt(this.pixel, 10)
       const size = parseInt(this.size, 10)
       const boxShadows = Array.from(allDivs)
         .map((el, i) => {
@@ -282,7 +286,12 @@ export default {
         })
 
       const spliced = boxShadows.filter(it => !/(\s0 transparent$)/.test(it))
-      const boxShadowProperty = spliced.join(', \n')
+
+      return spliced.join(', \n')
+    },
+    output () {
+      const pixel = parseInt(this.pixel, 10)
+      const boxShadows = this.getBoxShadows(pixel)
       this.setPreview()
       this.code = `<div class="vue-pixel-art"></div>
 <style>
@@ -294,7 +303,7 @@ export default {
   width: ${pixel}px;
   height: ${pixel}px;
   background: transparent;
-  box-shadow: ${boxShadowProperty};
+  box-shadow: ${boxShadows};
 }
 </style>`
     },
@@ -381,12 +390,13 @@ $px: 2px;
 }
 
 .preview {
-  border: 4px solid #333333;
-  height: 248px;
-  width: 248px;
-  margin-right: 2.8em;
-  position: relative;
-  box-sizing: border-box;
+  border: 4px solid #333333 !important;
+  height: 200px !important;
+  width: 200px !important;
+  display: inline-block !important;
+  margin-right: 2.8em !important;
+  position: relative !important;
+  box-sizing: border-box !important;
 }
 
 .before {
