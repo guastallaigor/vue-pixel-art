@@ -26,7 +26,7 @@
                 class="input w100px"
                 :class="{'is-error': sizeError}"
                 v-model="size"
-                @input="changeSize(parseInt($event.target.value, 10))"
+                @input="changeSize"
               />
               <span class="pl">px</span>
             </div>
@@ -40,6 +40,7 @@
                 name="pixel"
                 class="input w100px"
                 v-model="pixel"
+                @input="output"
               />
               <span class="pl">px</span>
             </div>
