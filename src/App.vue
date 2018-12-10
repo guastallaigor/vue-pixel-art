@@ -433,6 +433,11 @@ footer .mb {
 
 .btn {
   margin: 0 !important;
+  margin-bottom: 2px !important;
+}
+
+.input {
+  padding: 0.55rem 1rem !important;
 }
 
 .h-container {
