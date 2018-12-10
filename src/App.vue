@@ -236,11 +236,10 @@ export default {
 
       this.output()
     },
-    setPreview() {
+    setPreview () {
       const size = parseInt(this.size, 10)
       const pixel = (577 / size) / 2.4
       const refs = this.$refs
-      const before = refs.previewBefore
       const grid = refs.drawGrid
       const allDivs = grid.querySelectorAll('div')
       const boxShadows = Array.from(allDivs)
@@ -254,7 +253,7 @@ export default {
               .backgroundColor || 'transparent'
           ].join(' ')
         })
-
+      const before = refs.previewBefore
       before.style.top = `${pixel * -1}px`
       before.style.left = `${pixel * -1}px`
       before.style.width = `${pixel}px`
@@ -267,7 +266,6 @@ export default {
     output () {
       const refs = this.$refs
       const grid = refs.drawGrid
-      const before = refs.previewBefore
       const allDivs = grid.querySelectorAll('div')
       const pixel = parseInt(this.pixel, 10)
       const size = parseInt(this.size, 10)
