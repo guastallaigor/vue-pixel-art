@@ -6,8 +6,13 @@
     <div class="layout wrap-row mt h100">
       <section class="container with-title w50 h-container">
         <h2 class="title">Paint</h2>
-        <div class="editor">
-          <div class="draw" ref="drawGrid"></div>
+        <div class="layout align-end">
+          <div class="preview">
+            <div class="before" ref="previewBefore"></div>
+          </div>
+          <div class="editor">
+            <div class="draw" ref="drawGrid"></div>
+          </div>
         </div>
       </section>
       <section class="form container with-title w50 h-container">
@@ -231,9 +236,37 @@ export default {
 
       this.output()
     },
+    setPreview() {
+      const pixel = parseInt(this.pixel, 10)
+      const size = parseInt(this.size, 10)
+      const refs = this.$refs
+      const before = refs.previewBefore
+      const grid = refs.drawGrid
+      const allDivs = grid.querySelectorAll('div')
+      const boxShadows = Array.from(allDivs)
+        .map((el, i) => {
+          return [
+            `${pixel * (i % size) + pixel}px`, // col
+            `${pixel * Math.ceil((i + 1) / size)}px`, // row
+            0,
+            el
+              .style
+              .backgroundColor || 'transparent'
+          ].join(' ')
+        })
+      before.style.top = `${pixel * -1}px`
+      before.style.left = `${pixel * -1}px`
+      before.style.width = `${pixel}px`
+      before.style.height = `${pixel}px`
+      const spliced = boxShadows.filter(it => !/(\s0 transparent$)/.test(it))
+      const boxShadowProperty = spliced.join(', \n')
+      before.style.boxShadow = boxShadowProperty
+      before.style.background = 'transparent'
+    },
     output () {
       const refs = this.$refs
       const grid = refs.drawGrid
+      const before = refs.previewBefore
       const allDivs = grid.querySelectorAll('div')
       const pixel = parseInt(this.pixel, 10)
       const size = parseInt(this.size, 10)
@@ -251,6 +284,7 @@ export default {
 
       const spliced = boxShadows.filter(it => !/(\s0 transparent$)/.test(it))
       const boxShadowProperty = spliced.join(', \n')
+      this.setPreview()
       this.code = `<div class="vue-pixel-art"></div>
 <style>
 .vue-pixel-art::before {
@@ -266,14 +300,16 @@ export default {
 </style>`
     },
     changeSize () {
+      const refs = this.$refs
+      const before = refs.previewBefore
+      before.style = ''
+
       if (this.size > 100) {
         this.sizeError = true
         return
       }
 
       this.sizeError = false
-
-      const refs = this.$refs
       const grid = refs.drawGrid
       const length = parseInt(this.size ** 2, 10)
       const qtdDivs = Array(length).fill(0)
@@ -343,6 +379,19 @@ $px: 2px;
   border: 0 !important;
   top: -50px !important;
   left: 30% !important;
+}
+
+.preview {
+  border: 4px solid #333333;
+  height: 250px;
+  width: 250px;
+  margin-right: 2.8em;
+  position: relative;
+  box-sizing: border-box;
+}
+
+.before {
+  position: relative;
 }
 
 .transition {
