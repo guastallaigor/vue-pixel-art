@@ -26,7 +26,7 @@
 
 ## Usage
 
-Go to https://vue-pixel-art-dmqkvcflzi.now.sh and have fun!
+Go to https://vue-pixel-art.now.sh/ and have fun!
 
 ## Development
 
