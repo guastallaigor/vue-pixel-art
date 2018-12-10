@@ -124,7 +124,7 @@ export default {
   computed: {
     getRows () {
       if (window.innerWidth > 1439) {
-        return 11
+        return 9
       }
 
       if (window.innerWidth > 720) {
@@ -429,6 +429,10 @@ footer .mb {
 
 .w33 {
   width: 33%;
+}
+
+.btn {
+  margin: 0 !important;
 }
 
 .h-container {
