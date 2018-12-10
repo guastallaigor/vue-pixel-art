@@ -237,8 +237,8 @@ export default {
       this.output()
     },
     setPreview() {
-      const pixel = parseInt(this.pixel, 10)
       const size = parseInt(this.size, 10)
+      const pixel = (577 / size) / 2.4
       const refs = this.$refs
       const before = refs.previewBefore
       const grid = refs.drawGrid
@@ -254,6 +254,7 @@ export default {
               .backgroundColor || 'transparent'
           ].join(' ')
         })
+
       before.style.top = `${pixel * -1}px`
       before.style.left = `${pixel * -1}px`
       before.style.width = `${pixel}px`
@@ -383,14 +384,15 @@ $px: 2px;
 
 .preview {
   border: 4px solid #333333;
-  height: 250px;
-  width: 250px;
+  height: 248px;
+  width: 248px;
   margin-right: 2.8em;
   position: relative;
   box-sizing: border-box;
 }
 
 .before {
+  box-sizing: border-box;
   position: relative;
 }
 
