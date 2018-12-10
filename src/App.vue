@@ -294,7 +294,7 @@ export default {
         .style
         .gridTemplateRows = '1fr '.repeat(this.size)
     },
-    onCopy() {
+    onCopy () {
       this.show = true
       setTimeout(() => {
         this.show = false
