@@ -47,9 +47,9 @@ The default port is **8080**.
 
 ## TODO
 
-* [ ] Add E2E tests with Cypress.
 * [ ] Add Unit tests with Jest.
 * [ ] Add Redo/Undo.
+* [X] Add E2E tests with Cypress.
 * [X] Add mouse drag and paint.
 * [X] Add Vuejs pixel logo on README and favicon.ico.
 * [X] Deploy.
