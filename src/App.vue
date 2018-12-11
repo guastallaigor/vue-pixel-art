@@ -58,7 +58,7 @@
           <label for="color">Color</label>
           <input
             v-model="color"
-            class="input"
+            class="input color"
             type="text"
             :style="{ backgroundColor: color }"
             @click="$refs.colorPicker.click()"
