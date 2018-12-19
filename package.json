@@ -14,6 +14,7 @@
     "deploy": "npm run build && now --public && now alias && now rm vue-pixel-art --safe --yes"
   },
   "dependencies": {
+    "nes.css": "^1.0.0",
     "vue": "^2.5.17",
     "vue-clipboard2": "^0.2.1"
   },

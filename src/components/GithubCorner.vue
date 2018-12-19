@@ -27,7 +27,7 @@
         ></path>
       </svg>
     </a>
-    <section class="balloon from-left github-corner-tooltip">
+    <section class="nes-balloon from-left github-corner-tooltip">
       Fork me!
     </section>
   </div>

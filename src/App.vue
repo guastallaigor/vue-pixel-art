@@ -1,10 +1,10 @@
 <template>
   <main id="app">
-    <section class="container is-dark">
+    <section class="nes-container is-dark">
       <h1 class="text-center">Vue Pixel Art</h1>
     </section>
     <div class="layout wrap-row mt h100">
-      <section class="container with-title w50 h-container">
+      <section class="nes-container with-title w50 h-container">
         <h2 class="title">Paint</h2>
         <div class="layout align-end">
           <div class="layout nowrap-column">
@@ -18,20 +18,20 @@
           </div>
         </div>
       </section>
-      <section class="form container with-title w50 h-container">
+      <section class="form nes-container with-title w50 h-container">
         <h2 class="title">Configuration</h2>
         <div class="layout wrap-row align-end">
-          <div class="field mr-field">
-            <button class="btn is-error" @click="changeSize">Clear paint</button>
+          <div class="nes-field mr-field">
+            <button class="nes-btn is-error" @click="changeSize">Clear paint</button>
           </div>
-          <div class="field pr-field">
+          <div class="nes-field pr-field">
             <label for="size">Size</label>
             <div class="layout nowrap-row align-end">
               <input
                 type="number"
                 id="size"
                 name="size"
-                class="input w100px"
+                class="nes-input w100px"
                 :class="{'is-error': sizeError}"
                 v-model="size"
                 @input="changeSize"
@@ -39,14 +39,14 @@
               <span class="pl">px</span>
             </div>
           </div>
-          <div class="field pr-field">
+          <div class="nes-field pr-field">
             <label for="height">Pixels</label>
             <div class="layout nowrap-row align-end">
               <input
                 type="number"
                 id="pixel"
                 name="pixel"
-                class="input w100px"
+                class="nes-input w100px"
                 v-model="pixel"
                 @input="output"
               />
@@ -54,11 +54,11 @@
             </div>
           </div>
         </div>
-        <div class="field mt">
+        <div class="nes-field mt">
           <label for="color">Color</label>
           <input
             v-model="color"
-            class="input color"
+            class="nes-input color"
             type="text"
             :style="{ backgroundColor: color }"
             @click="$refs.colorPicker.click()"
@@ -72,18 +72,18 @@
         </div>
         <div class="field mt">
           <label for="height">Code generated</label>
-          <textarea id="code" :rows="getRows" name="code" readonly class="input w100" v-model="code"></textarea>
+          <textarea id="code" :rows="getRows" name="code" readonly class="nes-input w100" v-model="code"></textarea>
         </div>
         <div class="layout nowrap-row relative">
           <div class="field mt">
             <button
-              class="btn is-primary"
+              class="nes-btn is-primary"
               v-clipboard:copy="code"
               v-clipboard:success="onCopy"
             >Copy to clipboard</button>
           </div>
            <transition name="fade" mode="out-in">
-            <div class="balloon from-left copied transition" v-if="show">
+            <div class="nes-balloon from-left copied transition" v-if="show">
               Copied!
             </div>
           </transition>
@@ -92,7 +92,7 @@
       <footer class="layout justify-center align-center wrap-column">
         <div>
           <span class="pr">Made with</span>
-          <i class="icon heart"></i>
+          <i class="nes-icon heart"></i>
           <span class="pl">by</span>
           <a class="pl" href="https://github.com/guastallaigor" target="_blank">@guastallaigor</a>
         </div>
