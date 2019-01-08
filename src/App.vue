@@ -14,7 +14,7 @@
             </div>
           </div>
           <div class="editor">
-            <div class="draw" ref="drawGrid"></div>
+            <div class="draw" :style="getDrawStyle" ref="drawGrid"></div>
           </div>
         </div>
       </section>
@@ -85,10 +85,10 @@
         </div>
         <div class="nes-field mt">
           <label for="height">Code generated</label>
-          <textarea id="code" :rows="getRows" name="code" readonly class="nes-input w100" v-model="code"></textarea>
+          <textarea id="code" ref="textcode" :rows="getRows" name="code" readonly class="nes-input w100" v-model="code"></textarea>
         </div>
         <div class="layout nowrap-row relative">
-          <div class="nes-field mt">
+          <div class="nes-field mt pr-field-double">
             <button
               class="nes-btn is-primary"
               v-clipboard:copy="code"
@@ -100,6 +100,11 @@
               Copied!
             </div>
           </transition>
+          <div class="nes-field mt">
+            <button v-if="code" class="nes-btn is-warning" @click="download">
+              {{ downloading ? 'Downloading...' : 'Download as image' }}
+            </button>
+          </div>
         </div>
       </section>
       <footer class="layout justify-center align-center wrap-column">
@@ -125,6 +130,8 @@
 
 <script>
 import GithubCorner from '@/components/GithubCorner.vue'
+import DomToImage from 'dom-to-image'
+import download from 'downloadjs'
 
 const CODE_START = '<div class="vue-pixel-art"></div>'
 
@@ -141,7 +148,9 @@ export default {
     color: '#1cb785',
     code: CODE_START,
     erase: false,
-    borders: true
+    borders: true,
+    downloading: false,
+    white: false
   }),
   computed: {
     getRows () {
@@ -167,6 +176,11 @@ export default {
         'is-warning': erase,
         'is-success': !erase
       }
+    },
+    getDrawStyle () {
+      const { white } = this
+
+      return white ? 'background:#fff !important;' : ''
     }
   },
   mounted () {
@@ -187,9 +201,33 @@ export default {
   },
   beforeDestroy () {
     this.removeChilds()
-    document.removeEventListener('mouseup')
+    document
+      .removeEventListener('mouseup', this
+      .mouseup
+      .bind(this, el))
   },
   methods: {
+    download() {
+      this.downloading = true
+      this.white = true
+      this.toggleBorders()
+
+      try {
+        setTimeout(async () => {
+          const refs = this.$refs
+          const drawGrid = refs.drawGrid
+          const file = await DomToImage.toBlob(drawGrid)
+          download(file, 'vue-pixel-art.png', 'image/png')
+          this.downloading = false
+          this.white = false
+          this.toggleBorders()
+        })
+      } catch (e) {
+        this.downloading = false
+        this.white = false
+        this.toggleBorders()
+      }
+    },
     togglePaintErase () {
       this.erase = !this.erase
     },
@@ -200,7 +238,6 @@ export default {
       return grid.querySelectorAll('div')
     },
     toggleBorders () {
-      const { borders } = this
       const allDivs = this.getAllDivs()
 
       Array.from(allDivs).forEach(el => {
@@ -471,6 +508,10 @@ $px: 2px;
 
 .pr-field {
   padding-right: 20px;
+}
+
+.pr-field-double {
+  padding-right: 40px;
 }
 
 .mr-field {
