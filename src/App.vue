@@ -24,6 +24,9 @@
           <div class="nes-field mr-field">
             <button class="nes-btn is-error" @click="changeSize">Clear paint</button>
           </div>
+          <div class="nes-field mr-field">
+            <button class="nes-btn" :class="getClassBtnErase" @click="togglePaintErase">{{ getLabelBtnErase }}</button>
+          </div>
           <div class="nes-field pr-field">
             <label for="size">Size</label>
             <div class="layout nowrap-row align-end">
@@ -55,27 +58,37 @@
           </div>
         </div>
         <div class="nes-field mt">
-          <label for="color">Color</label>
-          <input
-            v-model="color"
-            class="nes-input color"
-            type="text"
-            :style="{ backgroundColor: color }"
-            @click="$refs.colorPicker.click()"
-          />
-          <input
-            @input="updateColor"
-            ref="colorPicker"
-            type="color"
-            style="display: none"
-          />
+          <div class="layout nowrap-row align-end">
+            <div class="nes-field pr-field">
+              <label>
+                <input type="checkbox" class="nes-checkbox" v-model="borders" @click.stop="toggleBorders">
+                <span>Borders</span>
+              </label>
+            </div>
+            <div class="layout nowrap-column nes-field">
+              <label for="color">Color</label>
+              <input
+                v-model="color"
+                class="nes-input color"
+                type="text"
+                :style="{ backgroundColor: color }"
+                @click="$refs.colorPicker.click()"
+              />
+              <input
+                @input="updateColor"
+                ref="colorPicker"
+                type="color"
+                style="display: none"
+              />
+            </div>
+          </div>
         </div>
-        <div class="field mt">
+        <div class="nes-field mt">
           <label for="height">Code generated</label>
           <textarea id="code" :rows="getRows" name="code" readonly class="nes-input w100" v-model="code"></textarea>
         </div>
         <div class="layout nowrap-row relative">
-          <div class="field mt">
+          <div class="nes-field mt">
             <button
               class="nes-btn is-primary"
               v-clipboard:copy="code"
@@ -127,8 +140,8 @@ export default {
     isMouseDown: false,
     color: '#1cb785',
     code: CODE_START,
-    end: `}
-          </style>`
+    erase: false,
+    borders: true
   }),
   computed: {
     getRows () {
@@ -141,6 +154,19 @@ export default {
       }
 
       return 5
+    },
+    getLabelBtnErase () {
+      const { erase } = this
+
+      return erase ? 'Erase activated' : 'Paint activated'
+    },
+    getClassBtnErase () {
+      const { erase } = this
+
+      return {
+        'is-warning': erase,
+        'is-success': !erase
+      }
     }
   },
   mounted () {
@@ -164,6 +190,23 @@ export default {
     document.removeEventListener('mouseup')
   },
   methods: {
+    togglePaintErase () {
+      this.erase = !this.erase
+    },
+    getAllDivs () {
+      const refs = this.$refs
+      const grid = refs.drawGrid
+
+      return grid.querySelectorAll('div')
+    },
+    toggleBorders () {
+      const { borders } = this
+      const allDivs = this.getAllDivs()
+
+      Array.from(allDivs).forEach(el => {
+        el.className = el.className ? '' : 'no-border'
+      })
+    },
     updateColor (e) {
       const value = e.target.value
       this.color = value
@@ -186,18 +229,14 @@ export default {
         .removeChild(el)
     },
     removeChilds () {
-      const refs = this.$refs
-      const grid = refs.drawGrid
-      const allDivs = grid.querySelectorAll('div')
+      const allDivs = this.getAllDivs()
 
       Array.from(allDivs).forEach(el => {
         this.removeChild(el)
       })
     },
     resetEventListner () {
-      const refs = this.$refs
-      const grid = refs.drawGrid
-      const allDivs = grid.querySelectorAll('div')
+      const allDivs = this.getAllDivs()
 
       Array.from(allDivs).forEach(el => {
         el.addEventListener('mousedown', this
@@ -238,7 +277,7 @@ export default {
       this.isMouseDown = false
     },
     mustPaint (el) {
-      this.setBgColor(el, this.color)
+      this.setBgColor(el, this.erase ? 'transparent' : this.color)
     },
     paint (el) {
       const style = el.style
@@ -269,9 +308,7 @@ export default {
       before.style.background = 'transparent'
     },
     getBoxShadows (pixel) {
-      const refs = this.$refs
-      const grid = refs.drawGrid
-      const allDivs = grid.querySelectorAll('div')
+      const allDivs = this.getAllDivs()
       const size = parseInt(this.size, 10)
       const boxShadows = Array.from(allDivs)
         .map((el, i) => {
@@ -318,6 +355,7 @@ export default {
       }
 
       this.sizeError = false
+      this.borders = true
       const grid = refs.drawGrid
       const length = parseInt(this.size ** 2, 10)
       const qtdDivs = Array(length).fill(0)
@@ -361,6 +399,11 @@ a, a:hover {
 
 .draw div {
   border: 1px solid #b6b6b6;
+  background-color: transparent;
+}
+
+.draw .no-border {
+  border: 0;
   background-color: transparent;
 }
 </style>
