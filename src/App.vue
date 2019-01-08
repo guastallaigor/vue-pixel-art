@@ -202,9 +202,7 @@ export default {
   beforeDestroy () {
     this.removeChilds()
     document
-      .removeEventListener('mouseup', this
-      .mouseup
-      .bind(this, el))
+      .removeEventListener('mouseup', () => ({}))
   },
   methods: {
     download() {
