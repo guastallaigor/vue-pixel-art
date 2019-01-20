@@ -318,7 +318,9 @@ export default {
       const allDivs = this.getAllDivs()
 
       Array.from(allDivs).forEach(el => {
-        el.style.backgroundColor = this.backgroundColor
+        el.style.backgroundColor = el.style.backgroundColor === this.hexToRgb(this.color)
+          ? this.color
+          : this.backgroundColor
       })
     },
     checkDefault () {
