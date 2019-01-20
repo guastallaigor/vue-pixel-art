@@ -74,6 +74,7 @@
                 type="text"
                 :style="{ backgroundColor: color }"
                 @click="$refs.colorPicker.click()"
+                @blur="fillColor"
               />
               <input
                 @input="updateColor"
@@ -185,7 +186,8 @@ export default {
     downloading: false,
     white: false,
     backgroundColor: '',
-    imgSrc: ''
+    imgSrc: '',
+    colorCache: null
   }),
   computed: {
     getRows () {
@@ -218,6 +220,10 @@ export default {
       return white ? 'background:#fff !important;' : ''
     }
   },
+  created () {
+    this.colorCache = new Set()
+    this.fillColor()
+  },
   mounted () {
     this.changeSize()
 
@@ -240,6 +246,9 @@ export default {
       .removeEventListener('mouseup', () => ({}))
   },
   methods: {
+    fillColor () {
+      this.colorCache.add(this.hexToRgb(this.color))
+    },
     pixelateImgAndDownload () {
       const refs = this.$refs
       const isFile = refs.file
@@ -318,9 +327,9 @@ export default {
       const allDivs = this.getAllDivs()
 
       Array.from(allDivs).forEach(el => {
-        el.style.backgroundColor = el.style.backgroundColor === this.hexToRgb(this.color)
-          ? this.color
-          : this.backgroundColor
+        if (!this.colorCache.has(el.style.backgroundColor)) {
+          el.style.backgroundColor = this.backgroundColor
+        }
       })
     },
     checkDefault () {
