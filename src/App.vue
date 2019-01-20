@@ -89,7 +89,7 @@
           <textarea id="code" ref="textcode" :rows="getRows" name="code" readonly class="nes-input w100" v-model="code"></textarea>
         </div>
         <div class="layout nowrap-row relative">
-          <div class="nes-field mt pr-field-double">
+          <div class="nes-field mt pr-field">
             <button
               class="nes-btn is-primary"
               v-clipboard:copy="code"
@@ -101,11 +101,23 @@
               Copied!
             </div>
           </transition>
-          <div class="nes-field mt">
+          <div class="nes-field mt pr-field">
             <button v-if="code" class="nes-btn is-warning" @click="download">
               {{ downloading ? 'Downloading...' : 'Download as image' }}
             </button>
           </div>
+          <div class="nes-field mt">
+            <button class="nes-btn is-success" @click="$refs.file.click()">
+              Image to 8bit
+            </button>
+          </div>
+          <input
+            ref="file"
+            accept=".jpg, .jpeg, .png"
+            id="file"
+            type="file"
+            @change="pixelateImgAndDownload"
+          />
         </div>
       </section>
       <footer class="layout justify-center align-center wrap-column">
@@ -123,6 +135,9 @@
           <span class="pr">Credits:</span>
           <a class="pl" href="https://github.com/BcRikko" target="_blank">@bc_rikko</a>
         </div>
+        <div class="is-canvas">
+          <canvas id="canvas" class="canvas" ref="canvas"></canvas>
+        </div>
       </footer>
     </div>
   </main>
@@ -132,6 +147,7 @@
 import GithubCorner from '@/components/GithubCorner.vue'
 import DomToImage from 'dom-to-image'
 import download from 'downloadjs'
+import eightBit from '8bit'
 
 const CODE_START = '<div class="vue-pixel-art"></div>'
 
@@ -150,7 +166,8 @@ export default {
     erase: false,
     borders: true,
     downloading: false,
-    white: false
+    white: false,
+    imgSrc: ''
   }),
   computed: {
     getRows () {
@@ -205,6 +222,34 @@ export default {
       .removeEventListener('mouseup', () => ({}))
   },
   methods: {
+    pixelateImgAndDownload () {
+      const refs = this.$refs
+      const isFile = refs.file
+      const files = isFile.files
+      const hasFiles = files.length
+
+      if (files && hasFiles) {
+        const canvas = document.getElementById('canvas')
+
+        setTimeout(() => {
+          const file = files[0]
+          const img = new Image()
+          img.onload = () => {
+            eightBit(canvas, img, 10)
+          }
+          img.src = URL.createObjectURL(file)
+        })
+
+        try {
+          setTimeout(async () => {
+            const fileDownload = await DomToImage.toBlob(canvas)
+            download(fileDownload, 'vue-pixel-art-img-to-8bit.png', 'image/png')
+          }, 1000)
+        } catch (e) {
+          console.error(e)
+        }
+      }
+    },
     download () {
       this.downloading = true
       this.white = true
@@ -689,4 +734,10 @@ pre {
   }
 }
 
+input[type="file"], .is-canvas {
+  position: absolute;
+  top: -2000px;
+  z-index: -1;
+  left: 0;
+}
 </style>
