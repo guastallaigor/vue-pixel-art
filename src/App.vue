@@ -618,12 +618,18 @@ pre {
   .section-paint {
     width: 100%;
     height: calc(100% - 5em);
+    @media screen and (max-height: 769px) and (max-width: 1366px) {
+      height: calc(100% + 2em);
+    }
   }
   .section-config {
     width: 100%;
     margin-top: 1em;
     margin-bottom: 1em;
-    height: calc(100% - 7em);
+    height: calc(100% -7em);
+    @media screen and (max-height: 769px) {
+      height: 100%;
+    }
   }
   footer {
     margin-bottom: 1em;
@@ -639,6 +645,10 @@ pre {
   }
   .section-paint, .section-config {
     height: calc(100% + 10em);
+
+    @media screen and (max-height: 769px) {
+      height: calc(100% + 17em);
+    }
   }
   .section-config {
     margin-bottom: 1em;
@@ -647,6 +657,9 @@ pre {
     align-self: center;
     margin-bottom: 1em;
     display: flex !important;
+  }
+  footer {
+    margin-bottom: 1em;
   }
 }
 
@@ -662,10 +675,14 @@ pre {
   }
 }
 
-@media screen and (min-width: 1748px) {
+@media screen and (min-width: 1749px) {
   .section-paint, .section-config {
-    height: calc(100%);
+    height: calc(100% - 10em);
     margin-bottom: 1em;
+
+    @media screen and (max-height: 769px) {
+      height: calc(100% + 6em);
+    }
   }
   footer {
     margin-bottom: 1em;
