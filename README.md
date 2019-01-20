@@ -27,7 +27,7 @@
 
 ## Usage
 
-Recommended resolution: >= 925 x 768
+Recommended resolution: >= 925 x 768.
 Go to https://vue-pixel-art.now.sh and have fun!
 
 ## Development
