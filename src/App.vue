@@ -186,7 +186,6 @@ export default {
     downloading: false,
     white: false,
     backgroundColor: '',
-    imgSrc: '',
     colorCache: null
   }),
   computed: {
