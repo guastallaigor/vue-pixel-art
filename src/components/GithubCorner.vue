@@ -1,5 +1,5 @@
 <template functional>
-  <div>
+  <div class="main-gh-icon">
     <a
       href="https://github.com/guastallaigor/vue-pixel-art"
       class="github-corner"
@@ -10,7 +10,7 @@
         width="80"
         height="80"
         viewBox="0 0 250 250"
-        style="fill:#151513; color:#fff;"
+        style="fill:#262a2d; color:#fff;"
         aria-hidden="true"
       >
         <path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path>
@@ -27,41 +27,31 @@
         ></path>
       </svg>
     </a>
-    <section class="nes-balloon from-left github-corner-tooltip">
-      Fork me!
-    </section>
   </div>
 </template>
 
 <style lang="scss">
 .github-corner {
   position: absolute;
-  bottom: 0;
-  border: 0;
-  z-index: 999;
-  left: 0;
-  transform: rotate(180deg);
+  right: 7px;
+  top: 7px;
 
   &:hover .octo-arm {
     animation: octocat-wave 560ms ease-in-out;
   }
+}
 
-  &-tooltip {
-    position: absolute !important;
-    bottom: 45px !important;
-    border: 0 !important;
-    left: 15px !important;
-    padding: .5rem !important;
+.main-gh-icon {
+  align-self: flex-start;
+}
+@media screen and (max-width: 500px) {
+
+  .github-corner .octo-arm {
+    animation: octocat-wave 560ms ease-in-out;
   }
 
-  @media (max-width: 500px) {
-    .github-corner .octo-arm {
-      animation: octocat-wave 560ms ease-in-out;
-    }
-
-    .github-corner:hover .octo-arm {
-      animation: none;
-    }
+  .github-corner:hover .octo-arm {
+    animation: none;
   }
 }
 

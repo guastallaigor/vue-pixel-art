@@ -2,11 +2,12 @@
   <main id="app">
     <section class="nes-container is-dark">
       <h1 class="text-center">Vue Pixel Art</h1>
+      <github-corner/>
     </section>
     <div class="layout wrap-row mt h100">
-      <section class="nes-container with-title w50 h-container">
+      <section class="nes-container with-title w50 h-container section-paint">
         <h2 class="title">Paint</h2>
-        <div class="layout align-end">
+        <div class="layout align-end is-paint">
           <div class="layout nowrap-column">
             <label>Preview</label>
             <div class="preview">
@@ -18,7 +19,7 @@
           </div>
         </div>
       </section>
-      <section class="form nes-container with-title w50 h-container">
+      <section class="form nes-container with-title w50 h-container section-config">
         <h2 class="title">Configuration</h2>
         <div class="layout wrap-row align-end">
           <div class="nes-field mr-field">
@@ -27,7 +28,7 @@
           <div class="nes-field mr-field">
             <button class="nes-btn" :class="getClassBtnErase" @click="togglePaintErase">{{ getLabelBtnErase }}</button>
           </div>
-          <div class="nes-field pr-field">
+          <div class="nes-field pr-field is-size">
             <label for="size">Size</label>
             <div class="layout nowrap-row align-end">
               <input
@@ -42,7 +43,7 @@
               <span class="pl">px</span>
             </div>
           </div>
-          <div class="nes-field pr-field">
+          <div class="nes-field pr-field is-pixels">
             <label for="height">Pixels</label>
             <div class="layout nowrap-row align-end">
               <input
@@ -124,7 +125,6 @@
         </div>
       </footer>
     </div>
-    <github-corner/>
   </main>
 </template>
 
@@ -205,7 +205,7 @@ export default {
       .removeEventListener('mouseup', () => ({}))
   },
   methods: {
-    download() {
+    download () {
       this.downloading = true
       this.white = true
       this.toggleBorders()
@@ -583,6 +583,10 @@ footer .mb {
 
 .h-container {
   height: calc(100% - 10em);
+
+  @media screen and (max-width: 1366px) {
+    height: 100%;
+  }
 }
 
 .editor {
@@ -609,4 +613,63 @@ pre {
   color: rgb(212, 0, 255);
   line-height: 30px;
 }
+
+@media screen and (max-width: 1366px) {
+  .section-paint {
+    width: 100%;
+    height: calc(100% - 5em);
+  }
+  .section-config {
+    width: 100%;
+    margin-top: 1em;
+    margin-bottom: 1em;
+    height: calc(100% - 7em);
+  }
+  footer {
+    margin-bottom: 1em;
+  }
+}
+
+@media screen and (min-width: 1367px) and (max-width: 1748px) {
+  .is-paint {
+    flex-flow: row wrap;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+  }
+  .section-paint, .section-config {
+    height: calc(100% + 10em);
+  }
+  .section-config {
+    margin-bottom: 1em;
+  }
+  .preview {
+    align-self: center;
+    margin-bottom: 1em;
+    display: flex !important;
+  }
+}
+
+@media screen and (min-width: 1367px) and (max-width: 1508px) {
+  .is-size, .is-pixels {
+    margin-top: 1em;
+  }
+}
+
+@media screen and (min-width: 1367px) and (max-width: 1847px) {
+  .is-pixels {
+    margin-top: 1em;
+  }
+}
+
+@media screen and (min-width: 1748px) {
+  .section-paint, .section-config {
+    height: calc(100%);
+    margin-bottom: 1em;
+  }
+  footer {
+    margin-bottom: 1em;
+  }
+}
+
 </style>
