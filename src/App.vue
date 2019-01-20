@@ -59,14 +59,14 @@
           </div>
         </div>
         <div class="nes-field mt">
-          <div class="layout nowrap-row align-end">
-            <div class="nes-field pr-field">
+          <div class="layout nowrap-row align-end pl-field">
+            <div class="nes-field">
               <label>
                 <input type="checkbox" class="nes-checkbox" v-model="borders" @click.stop="toggleBorders">
                 <span>Borders</span>
               </label>
             </div>
-            <div class="layout nowrap-column nes-field">
+            <div class="layout nowrap-column nes-field pr-field">
               <label for="color">Color</label>
               <input
                 v-model="color"
@@ -78,6 +78,23 @@
               <input
                 @input="updateColor"
                 ref="colorPicker"
+                type="color"
+                style="display: none"
+              />
+            </div>
+            <div class="layout nowrap-column nes-field">
+              <label for="color">Background Color</label>
+              <input
+                v-model="backgroundColor"
+                class="nes-input"
+                type="text"
+                :style="{ backgroundColor }"
+                @input="checkDefault"
+                @click="$refs.bgColorPicker.click()"
+              />
+              <input
+                @input="updateBgColor"
+                ref="bgColorPicker"
                 type="color"
                 style="display: none"
               />
@@ -167,6 +184,7 @@ export default {
     borders: true,
     downloading: false,
     white: false,
+    backgroundColor: '',
     imgSrc: ''
   }),
   computed: {
@@ -290,6 +308,24 @@ export default {
     updateColor (e) {
       const value = e.target.value
       this.color = value
+    },
+    updateBgColor (e) {
+      const value = e.target.value
+      this.backgroundColor = value
+      this.toggleBgColor()
+    },
+    toggleBgColor () {
+      const allDivs = this.getAllDivs()
+
+      Array.from(allDivs).forEach(el => {
+        el.style.backgroundColor = this.backgroundColor
+      })
+    },
+    checkDefault () {
+      if (this.backgroundColor === 'default' || !this.backgroundColor) {
+        this.backgroundColor = ''
+        this.toggleBgColor()
+      }
     },
     removeChild (el) {
       el.removeEventListener('click', this
@@ -553,6 +589,10 @@ $px: 2px;
   padding-right: 20px;
 }
 
+.pl-field {
+  padding-left: 25px;
+}
+
 .pr-field-double {
   padding-right: 40px;
 }
@@ -567,6 +607,11 @@ $px: 2px;
 
 .mb {
   margin-bottom: $px * 16;
+}
+
+.bgcolor {
+  background-image: linear-gradient(45deg, #e2e2e2 25%, transparent 25%, transparent 75%, #e2e2e2 75%, #e2e2e2),
+    linear-gradient( 45deg, #e2e2e2 25%, transparent 25%, transparent 75%, #e2e2e2 75%, #e2e2e2);
 }
 
 footer .mt {
