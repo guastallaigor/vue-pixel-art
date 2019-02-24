@@ -557,8 +557,7 @@ $px: 2px;
 
 .copied {
   position: absolute !important;
-  border: 0 !important;
-  top: -50px !important;
+  top: -55px !important;
   left: 30% !important;
 }
 
