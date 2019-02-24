@@ -3,6 +3,7 @@ import App from './App.vue'
 import VueClipboard from 'vue-clipboard2'
 import 'typeface-press-start-2p/index.css'
 import '../node_modules/nes.css/css/nes.min.css'
+import './assets/style/flex.scss'
 
 Vue.use(VueClipboard)
 

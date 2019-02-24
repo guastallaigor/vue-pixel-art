@@ -1,8 +1,8 @@
 {
   "name": "vue-pixel-art",
-  "description": "Create a pixel art with vuejs",
-  "version": "0.1.0",
-  "private": true,
+  "description": "Vue Pixel Art is an easy way to draw your Pixel Arts",
+  "version": "1.0.0",
+  "private": false,
   "scripts": {
     "serve": "vue-cli-service serve",
     "dev": "vue-cli-service serve",
@@ -17,8 +17,8 @@
     "8bit": "^1.0.1",
     "dom-to-image": "^2.6.0",
     "downloadjs": "^1.4.7",
-    "nes.css": "^1.0.0",
-    "vue": "^2.5.17",
+    "nes.css": "^2.0.0",
+    "vue": "^2.6.7",
     "vue-clipboard2": "^0.2.1"
   },
   "devDependencies": {

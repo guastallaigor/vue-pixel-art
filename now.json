@@ -1,18 +1,7 @@
 {
-  "name": "vue-pixel-art",
-  "type": "static",
-  "version": 1,
-  "static": {
-    "public": "dist",
-    "rewrites": [
-      {
-        "source": "**",
-        "destination": "/index.html"
-      }
+    "version": 2,
+    "name": "vue-pixel-art",
+    "builds": [
+        { "src": "package.json", "use": "@now/static-build" }
     ]
-  },
-  "alias": "vue-pixel-art.now.sh",
-  "files": [
-    "dist"
-  ]
 }

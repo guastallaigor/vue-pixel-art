@@ -21,7 +21,7 @@
       </section>
       <section class="form nes-container with-title w50 h-container section-config">
         <h2 class="title">Configuration</h2>
-        <div class="layout wrap-row align-end">
+        <div class="layout wrap-row align-end mt-negative">
           <div class="nes-field mr-field">
             <button class="nes-btn is-error" @click="changeSize">Clear paint</button>
           </div>
@@ -43,7 +43,7 @@
               <span class="pl">px</span>
             </div>
           </div>
-          <div class="nes-field pr-field is-pixels">
+          <div class="nes-field is-pixels">
             <label for="height">Pixels</label>
             <div class="layout nowrap-row align-end">
               <input
@@ -59,7 +59,7 @@
           </div>
         </div>
         <div class="nes-field mt">
-          <div class="layout nowrap-row align-end pl-field">
+          <div class="layout nowrap-row align-end pl-field mt-negative">
             <div class="nes-field">
               <label>
                 <input type="checkbox" class="nes-checkbox" v-model="borders" @click.stop="toggleBorders">
@@ -106,7 +106,7 @@
           <label for="height">Code generated</label>
           <textarea id="code" ref="textcode" :rows="getRows" name="code" readonly class="nes-input w100" v-model="code"></textarea>
         </div>
-        <div class="layout nowrap-row relative">
+        <div class="layout nowrap-row relative f-size-btns">
           <div class="nes-field mt pr-field">
             <button
               class="nes-btn is-primary"
@@ -126,7 +126,7 @@
           </div>
           <div class="nes-field mt">
             <button class="nes-btn is-success" @click="$refs.file.click()">
-              Image to 8bit
+              Image to 8-bit
             </button>
           </div>
           <input
@@ -144,6 +144,10 @@
           <i class="nes-icon heart"></i>
           <span class="pl">by</span>
           <a class="pl" href="https://github.com/guastallaigor" target="_blank">@guastallaigor</a>
+          <span class="pr pl">/</span>
+          <span class="pr">Theme:</span>
+          <i class="snes-jp-logo"></i>
+          <a class="pl-nes" href="https://nostalgic-css.github.io/NES.css/" target="_blank">NES.css</a>
         </div>
         <div class="mt mb">
           <span class="pr">Project refactored from</span>
@@ -170,6 +174,7 @@ import eightBit from '8bit'
 const CODE_START = '<div class="vue-pixel-art"></div>'
 
 export default {
+  name: 'App',
   components: {
     GithubCorner
   },
@@ -203,7 +208,7 @@ export default {
     getLabelBtnErase () {
       const { erase } = this
 
-      return erase ? 'Erase activated' : 'Paint activated'
+      return erase ? 'Erase' : 'Paint'
     },
     getClassBtnErase () {
       const { erase } = this
@@ -334,8 +339,9 @@ export default {
     checkDefault () {
       if (this.backgroundColor === 'default' || !this.backgroundColor) {
         this.backgroundColor = ''
-        this.toggleBgColor()
       }
+
+      this.toggleBgColor()
     },
     removeChild (el) {
       el.removeEventListener('click', this
@@ -515,7 +521,7 @@ export default {
 
 <style>
 html, body {
-  height: calc(100% - 4em);
+  height: calc(100% - 4.5em);
   width: 100%;
 }
 
@@ -535,8 +541,6 @@ a, a:hover {
 </style>
 
 <style scoped lang="scss">
-@import './style/flex.scss';
-
 $px: 2px;
 
 #app {
@@ -608,7 +612,7 @@ $px: 2px;
 }
 
 .mr-field {
-  padding-right: 20px;
+  padding-right: 14px;
 }
 
 .mt {
@@ -708,22 +712,18 @@ footer .mb {
   }
 }
 
-pre {
-  white-space: pre-wrap;
-  color: rgb(212, 0, 255);
-  line-height: 30px;
-}
-
 @media screen and (max-width: 1366px) {
   .section-paint {
-    width: 100%;
+    width: 99.5%;
+    margin-left: .3%;
     height: calc(100% - 5em);
     @media screen and (max-height: 769px) and (max-width: 1366px) {
       height: calc(100% + 2em);
     }
   }
   .section-config {
-    width: 100%;
+    width: 99.5%;
+    margin-left: .3%;
     margin-top: 1em;
     margin-bottom: 1em;
     height: calc(100% -7em);
@@ -773,12 +773,18 @@ pre {
   .is-pixels {
     margin-top: 1em;
   }
+  .section-paint, .section-config {
+    width: 49.7%;
+    margin-left: .2%;
+  }
 }
 
 @media screen and (min-width: 1749px) {
   .section-paint, .section-config {
     height: calc(100% - 10em);
     margin-bottom: 1em;
+    width: 49.7%;
+    margin-left: .2%;
 
     @media screen and (max-height: 769px) {
       height: calc(100% + 6em);
@@ -794,5 +800,19 @@ input[type="file"], .is-canvas {
   top: -2000px;
   z-index: -1;
   left: 0;
+}
+
+.mt-negative {
+  margin-top: -15px;
+}
+
+.f-size-btns {
+  font-size: .9em;
+  display: flex;
+  justify-content: center;
+}
+
+.pl-nes {
+  padding-left: 15px;
 }
 </style>
