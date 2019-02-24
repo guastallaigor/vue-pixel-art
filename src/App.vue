@@ -157,6 +157,14 @@
           <span class="pr">Credits:</span>
           <a class="pl" href="https://github.com/BcRikko" target="_blank">@bc_rikko</a>
         </div>
+        <div class="social-buttons">
+          <p>Share on SNS</p>
+          <div class="share">
+            <a @click="share('twitter')"><i class="nes-icon twitter"></i></a>
+            <a @click="share('facebook')"><i class="nes-icon facebook"></i></a>
+            <a @click="share('linkedin')"><i class="nes-icon linkedin"></i></a>
+          </div>
+        </div>
         <div class="is-canvas">
           <canvas id="canvas" class="canvas" ref="canvas"></canvas>
         </div>
@@ -250,6 +258,15 @@ export default {
       .removeEventListener('mouseup', () => ({}))
   },
   methods: {
+    share (media) {
+      const url = {
+        twitter: 'http://twitter.com/share?text=Vue%20Pixel%20Art%20is%20an%20easy%20way%20to%20draw%20your%20Pixel%20Arts&url=https://vue-pixel-art.now.sh/',
+        facebook: 'http://www.facebook.com/sharer.php?u=https://vue-pixel-art.now.sh/&t=Vue%EF%BD%9CPixel%20Art',
+        linkedin: 'https://www.linkedin.com/shareArticle?url=https%3A//vue-pixel-art.now.sh/&title=Vue%EF%BD%9CPixel%20Art'
+      }[media]
+
+      window.open(url, '_blank')
+    },
     fillColor () {
       this.colorCache.add(this.hexToRgb(this.color))
     },
@@ -821,5 +838,17 @@ input[type="file"], .is-canvas {
 
 textarea {
   resize: none;
+}
+
+.social-buttons {
+  position: absolute;
+  right: 5%;
+  margin-bottom: 0;
+}
+
+.share {
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
 }
 </style>
