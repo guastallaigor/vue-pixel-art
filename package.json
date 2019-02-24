@@ -1,6 +1,8 @@
 {
   "name": "vue-pixel-art",
   "description": "Vue Pixel Art is an easy way to draw your Pixel Arts",
+  "homepage": "https://github.com/guastallaigor/vue-pixel-art#readme",
+  "author": "Igor Guastalla de Lima",
   "version": "1.0.0",
   "private": false,
   "scripts": {
@@ -39,5 +41,23 @@
     "sass-loader": "^7.0.1",
     "typeface-press-start-2p": "0.0.54",
     "vue-template-compiler": "^2.5.17"
+  },
+  "bugs": {
+    "url": "https://github.com/guastallaigor/vue-pixel-art/issues"
+  },
+  "keywords": [
+    "pixel-art",
+    "vue",
+    "vuejs2",
+    "pixel",
+    "pixel-editor",
+    "pixel-art-maker",
+    "vue-pixel"
+  ],
+  "license": "MIT",
+  "main": "./vue-pixel-art.js",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com:guastallaigor/vue-pixel-art.git"
   }
 }
