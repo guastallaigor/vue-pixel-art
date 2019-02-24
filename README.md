@@ -1,5 +1,5 @@
 <div align="center">
-  <img src="./src/public/logo.png" width="200px">
+  <img src="./public/logo.png" width="200px">
   <h1>Vue Pixel Art</h1>
 </div>
 
