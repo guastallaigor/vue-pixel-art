@@ -7,7 +7,7 @@
     <div class="layout wrap-row mt h100">
       <section class="nes-container with-title w50 h-container section-paint">
         <h2 class="title">Paint</h2>
-        <div class="layout align-end is-paint">
+        <div class="layout align-end is-paint mt-negative-container">
           <div class="layout nowrap-column">
             <label>Preview</label>
             <div class="preview">
@@ -813,5 +813,13 @@ input[type="file"], .is-canvas {
 
 .pl-nes {
   padding-left: 15px;
+}
+
+.mt-negative-container {
+  margin-top: -2%;
+}
+
+textarea {
+  resize: none;
 }
 </style>
