@@ -1,0 +1,4 @@
+This is a Brave Rewards publisher verification file.
+
+Domain: vue-pixel-art.now.sh
+Token: cae4303cfb905f95aaf3c97c1809b89b256a1398dcc51c09cc686627a5e884e9
