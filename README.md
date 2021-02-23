@@ -20,10 +20,10 @@
 
 ## Instructions
 
-* Click on a square to paint. If it is already painted, that square will be transparent again.
-* Hold mouse down and drag your mouse everywhere in the grid to paint.
-* The button "Paint/Erase activated" only works when you use mouse down and drag.
-* Size can't be greater than 100.
+- Click on a square to paint. If it is already painted, that square will be transparent again.
+- Hold mouse down and drag your mouse everywhere in the grid to paint.
+- The button "Paint/Erase activated" only works when you use mouse down and drag.
+- Size can't be greater than 100.
 
 ## Usage
 
@@ -50,12 +50,14 @@ The default port is **8080**.
 
 ## TODO
 
-* [ ] Add Unit tests with Jest.
-* [ ] Add Redo/Undo.
-* [X] Add E2E tests with Cypress.
-* [X] Add mouse drag and paint.
-* [X] Add Vuejs pixel logo on README and favicon.ico.
-* [X] Deploy.
+- [ ] Add Unit tests with Jest.
+- [ ] Add Redo/Undo.
+- [x] Add E2E tests with Cypress.
+- [x] Add mouse drag and paint.
+- [x] Add Vuejs pixel logo on README and favicon.ico.
+- [x] Deploy.
+
+[![ko-fi](https://ko-fi.com/img/githubbutton_sm.svg)](https://ko-fi.com/C1C63QCB8)
 
 ## License
 
